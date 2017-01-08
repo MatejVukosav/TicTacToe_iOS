@@ -16,12 +16,12 @@
 
 /* Begin PBXFileReference section */
 		CE189AA31E22522C003E78B0 /* TicTacToe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TicTacToe.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE189AA61E22522C003E78B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		CE189AA61E22522C003E78B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = TicTacToe/AppDelegate.swift; sourceTree = "<group>"; };
 		CE189AA81E22522C003E78B0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		CE189AAB1E22522C003E78B0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		CE189AAD1E22522C003E78B0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CE189AAD1E22522C003E78B0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = TicTacToe/Assets.xcassets; sourceTree = "<group>"; };
 		CE189AB01E22522C003E78B0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		CE189AB21E22522C003E78B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE189AB21E22522C003E78B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = TicTacToe/Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +38,7 @@
 		CE189A9A1E22522C003E78B0 = {
 			isa = PBXGroup;
 			children = (
+				CE189AB81E225244003E78B0 /* Assets */,
 				CE189AA51E22522C003E78B0 /* TicTacToe */,
 				CE189AA41E22522C003E78B0 /* Products */,
 			);
@@ -54,14 +55,21 @@
 		CE189AA51E22522C003E78B0 /* TicTacToe */ = {
 			isa = PBXGroup;
 			children = (
-				CE189AA61E22522C003E78B0 /* AppDelegate.swift */,
 				CE189AA81E22522C003E78B0 /* ViewController.swift */,
 				CE189AAA1E22522C003E78B0 /* Main.storyboard */,
+			);
+			path = TicTacToe;
+			sourceTree = "<group>";
+		};
+		CE189AB81E225244003E78B0 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				CE189AA61E22522C003E78B0 /* AppDelegate.swift */,
 				CE189AAD1E22522C003E78B0 /* Assets.xcassets */,
 				CE189AAF1E22522C003E78B0 /* LaunchScreen.storyboard */,
 				CE189AB21E22522C003E78B0 /* Info.plist */,
 			);
-			path = TicTacToe;
+			name = Assets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -159,6 +167,7 @@
 				CE189AB01E22522C003E78B0 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			path = TicTacToe;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
