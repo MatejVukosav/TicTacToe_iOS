@@ -87,14 +87,14 @@ class ViewController: UIViewController {
         var text:String=playerOnTurn
         
         //kad stavim nesto na 11 i resetiram igru, 11 mi i dalje ima vrijednost, tj prode unutar if-a why??
-//        if let btnLabel=sender.titleLabel, let btnText=btnLabel.text{
-//            //odigran je X, znaci na redu je O
-//            text=btnText
-//        }else{
-//            //Promijeni vrijednosti na ploci
-//            //prvi igra igrac X
-//            text=playerOnTurn
-//        }
+        //        if let btnLabel=sender.titleLabel, let btnText=btnLabel.text{
+        //            //odigran je X, znaci na redu je O
+        //            text=btnText
+        //        }else{
+        //            //Promijeni vrijednosti na ploci
+        //            //prvi igra igrac X
+        //            text=playerOnTurn
+        //        }
         
         switch text{
         case markX:
@@ -112,29 +112,11 @@ class ViewController: UIViewController {
         }
         
         
+        let row:Int=tag/10-1
+        let column:Int=tag%10-1
         //Upisi korisnikov odabir u polje
-        switch tag {
-        case 11:
-            array[0][0]=lastPlayer
-        case 12:
-            array[0][1]=lastPlayer
-        case 13:
-            array[0][2]=lastPlayer
-        case 21:
-            array[1][0]=lastPlayer
-        case 22:
-            array[1][1]=lastPlayer
-        case 23:
-            array[1][2]=lastPlayer
-        case 31:
-            array[2][0]=lastPlayer
-        case 32:
-            array[2][1]=lastPlayer
-        case 33:
-            array[2][2]=lastPlayer
-        default:
-            print("error kod upisivanja vrijednosti u polje")
-        }
+        array[row][column]=lastPlayer
+        
         sender.isEnabled=false
         
         checkWinner()
@@ -315,7 +297,7 @@ class ViewController: UIViewController {
                 if let btn = view as? UIButton {
                     btn.setTitle(nil, for: [])
                     btn.isEnabled=true
-                    //resetiraj button text
+                    //resetiraj button vrijednosti
                 }
             }
         }
