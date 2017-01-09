@@ -22,9 +22,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xJA-qL-6mY">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xJA-qL-6mY">
                                 <rect key="frame" x="16" y="47" width="46" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Start"/>
                                 <connections>
                                     <action selector="OnStartClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GpG-HL-Kl8"/>
@@ -165,23 +166,39 @@
                                     <constraint firstItem="caS-8Q-DDT" firstAttribute="leading" secondItem="2Nq-7m-U1R" secondAttribute="leading" id="xgd-k5-a8A"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DgU-jr-mmB">
-                                <rect key="frame" x="16" y="85" width="46" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DgU-jr-mmB">
+                                <rect key="frame" x="16" y="85" width="58" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Reset"/>
                                 <connections>
                                     <action selector="onResetClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="b3U-Ap-hA5"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YMW-L9-xpJ">
-                                <rect key="frame" x="130" y="48" width="46" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YMW-L9-xpJ">
+                                <rect key="frame" x="16" y="123" width="46" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="End"/>
                                 <connections>
                                     <action selector="OnStartClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YpR-Hx-QA4"/>
                                     <action selector="onEndClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uC8-QJ-cJf"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Player on turn: " lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HV6-qd-tQw">
+                                <rect key="frame" x="16" y="171" width="175" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ePB-un-t01" userLabel="Player">
+                                <rect key="frame" x="16" y="193" width="42" height="55"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                <color key="textColor" red="0.92336606979370117" green="0.060660242343690614" blue="0.19414024824429729" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -193,6 +210,8 @@
                     <connections>
                         <outlet property="buttons" destination="2Nq-7m-U1R" id="mUr-Pn-uGY"/>
                         <outlet property="endBtn" destination="YMW-L9-xpJ" id="D5l-Vt-aDA"/>
+                        <outlet property="onTurnLabel" destination="HV6-qd-tQw" id="XQ1-Hi-HH9"/>
+                        <outlet property="playerName" destination="ePB-un-t01" id="05B-LM-yZf"/>
                         <outlet property="resetBtn" destination="DgU-jr-mmB" id="3pP-pc-o8o"/>
                         <outlet property="startBtn" destination="xJA-qL-6mY" id="N76-MP-Q5V"/>
                     </connections>

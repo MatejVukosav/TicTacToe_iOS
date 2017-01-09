@@ -14,16 +14,26 @@ class ViewController: UIViewController {
     @IBOutlet weak var startBtn: UIButton!
     @IBOutlet weak var buttons: UIView!
     @IBOutlet weak var endBtn: UIButton!
+    @IBOutlet weak var onTurnLabel: UILabel!
+    @IBOutlet weak var playerName: UILabel!
+    
+    
     
     let numOfColumns=3
     let numOfRows=3
     var array=Array<Array<String>>()
     
+    let markX:String="X"
+    let markO:String="O"
+    var lastPlayer:String = ""
+    var playerOnTurn:String = ""
     
+    override func viewDidLoad() {
+        initGame()
+    }
     
     @IBAction func OnStartClick(_ sender: UIButton) {
-        
-        buttons.isHidden=false
+        startGame()
         
         let initialFrame=buttons.frame
         let bounds = buttons.bounds
@@ -35,7 +45,6 @@ class ViewController: UIViewController {
             
             UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.0) {
                 self.buttons.frame = startFrame
-                self.resetGame()
             }
             UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.5) {
                 self.buttons.frame = finalFrame
@@ -44,8 +53,7 @@ class ViewController: UIViewController {
         
     }
     @IBAction func onEndClick(_ sender: UIButton) {
-        buttons.isHidden=true
-        resetGame()
+        endGame()
     }
     
     @IBAction func onResetClick(_ sender: UIButton) {
@@ -69,138 +77,234 @@ class ViewController: UIViewController {
         
     }
     
-    let markX:String="X"
-    let markO:String="O"
-    var player:String="O"
     
     @IBAction func onBtnClick(_ sender: UIButton) {
         let tag=sender.tag
-        print("Novost")
-        print(player)
         
-        if let btnText=sender.titleLabel, let text=btnText.text{
-            //Promijeni vrijednosti na ploci
-            //prvi igra igrac X
-    
-            switch text{
-            case markX:
-                //na redu je X
-                print(sender.currentTitle! )
-                sender.setTitle(markO, for: [])
-                print(sender.currentTitle! )
-                print("Treba biti O")
-                //  print(markO )
-                
-                player=markO
-            case markO:
-                //na redu je Y
-                print(sender.currentTitle! )
-                sender.setTitle(markX, for: [])
-                print(sender.currentTitle! )
-                print("Treba biti X")
-                //   print(markX )
-                
-                player=markX
-            default:
-                print("error kod mijenjanja vrijednosti na kliknutom buttonu igre")
-            }
+        lastPlayer=playerOnTurn
+        print(lastPlayer)
+        
+        var text:String=playerOnTurn
+        
+        //kad stavim nesto na 11 i resetiram igru, 11 mi i dalje ima vrijednost, tj prode unutar if-a why??
+//        if let btnLabel=sender.titleLabel, let btnText=btnLabel.text{
+//            //odigran je X, znaci na redu je O
+//            text=btnText
+//        }else{
+//            //Promijeni vrijednosti na ploci
+//            //prvi igra igrac X
+//            text=playerOnTurn
+//        }
+        
+        switch text{
+        case markX:
+            //na redu je X
+            sender.setTitle(markX, for: [])
+            lastPlayer=markX
+            playerOnTurn=markO
+        case markO:
+            //na redu je Y
+            sender.setTitle(markO, for: [])
+            lastPlayer=markO
+            playerOnTurn=markX
+        default:
+            print("error kod mijenjanja vrijednosti na kliknutom buttonu igre")
         }
+        
         
         //Upisi korisnikov odabir u polje
         switch tag {
         case 11:
-            array[0][0]=player
+            array[0][0]=lastPlayer
         case 12:
-            array[0][1]=player
+            array[0][1]=lastPlayer
         case 13:
-            array[0][2]=player
+            array[0][2]=lastPlayer
         case 21:
-            array[1][0]=player
+            array[1][0]=lastPlayer
         case 22:
-            array[1][1]=player
+            array[1][1]=lastPlayer
         case 23:
-            array[1][2]=player
+            array[1][2]=lastPlayer
         case 31:
-            array[2][0]=player
+            array[2][0]=lastPlayer
         case 32:
-            array[2][1]=player
+            array[2][1]=lastPlayer
         case 33:
-            array[2][2]=player
+            array[2][2]=lastPlayer
         default:
             print("error kod upisivanja vrijednosti u polje")
         }
+        sender.isEnabled=false
         
-        // checkWinner()
+        checkWinner()
+        playerName.text=playerOnTurn
+        print(array)
     }
     
     func checkWinner(){
         
-        let isWinnerHorizontal=checkHorizontal()
-        if(isWinnerHorizontal){
-            //showWinnerMsg(winner:"brat")
+        var status=checkHorizontal()
+        if(status.isWinner){
+            print("Winner horizontalno je \(status.player)")
+            showWinnerMsg(winner:status.player)
             return
         }
         
-        let isWinnerVertical=checkVertical()
-        if(isWinnerVertical){
+        status=checkVertical()
+        if(status.isWinner){
+            print("Winner vertikalno je \(status.player)")
+            showWinnerMsg(winner:status.player)
+            
             return
         }
         
-        let isWinnerDiagonally=checkDiagonally()
-        if(isWinnerDiagonally){
+        status=checkDiagonallyLeftToRight()
+        if(status.isWinner){
+            print("Winner dijagonala s lijeva nadesno je \(status.player)")
+            showWinnerMsg(winner:status.player)
+            return
+        }
+        
+        
+        status=checkDiagonallyRightToLeft()
+        if(status.isWinner){
+            print("Winner dijagonala s desna nalijevo je \(status.player)")
+            showWinnerMsg(winner:status.player)
             return
         }
         
     }
     
-    func checkHorizontal()->Bool{
+    func checkHorizontal()->(isWinner:Bool,player:String){
         var lastElement:String="Winner is error! he he"
         
         for i in 0..<3{
             var row=array[i]
-            print(row)
             
             lastElement=row[0]
             
             for el in 0..<row.count{
                 
                 let element=row[el]
-                if (element != "" && element == lastElement) {
-                    //ako je nesto postavljeno i to nesto je isto kao i zadnji element
-                    lastElement=element
-                    print(lastElement)
-                }else{
-                    print("oso u false: el "+element+" last "+lastElement)
+                if (element == "" || element != lastElement) {
                     break
                 }
                 
-                //imamo pobjednika
-                return true;
+                if(el+1==row.count){
+                    //imamo pobjednika
+                    return (true,lastElement);
+                }
             }
         }
-        return false
-    }
-    func checkVertical()->Bool{
-        
-        //showWinnerMsg(winner:"ne")
-        return false
+        return (false,"")
     }
     
-    func checkDiagonally()->Bool{
+    func checkVertical()->(isWinner:Bool,player:String){
+        var first:String
         
-        // showWinnerMsg(winner:"ne")
-        return false
+        for i in 0..<numOfColumns{
+            first=array[0][i]
+            
+            for row in 0..<numOfRows{
+                
+                let element=array[row][i]
+                if(element == "" || element != first ){
+                    break
+                }
+                
+                if(row==numOfRows-1){
+                    return (true,first)
+                }
+            }
+        }
+        return (false,"")
     }
+    
+    func checkDiagonallyLeftToRight()->(isWinner:Bool,player:String){
+        
+        let firstLeft=array[0][0]
+        //check from left to right
+        for i in 1..<numOfRows{
+            let element=array[i][i]
+            
+            if(element == "" || element != firstLeft ){
+                return (false,"")
+            }
+            
+        }
+        
+        return (true,firstLeft)
+    }
+    
+    func checkDiagonallyRightToLeft()->(isWinner:Bool,player:String){
+        
+        let lastRight=array[0][numOfColumns-1]
+        //check from right to left
+        for i in stride(from: numOfRows-1, through: 0, by: -1){
+            let element=array[numOfRows-1-i][i]
+            
+            if(element == "" || element != lastRight ){
+                return (false,"")
+            }
+        }
+        
+        return (true,lastRight)
+    }
+    
     
     func showWinnerMsg(winner:String){
         alert(title:"Winner",msg: "Winner is player \(winner)")
     }
     
+    func initGame(){
+        for _ in 0..<numOfRows{
+            array.append(Array(repeating:"",count:numOfColumns))
+        }
+        startBtn.isHidden=false
+        buttons.isHidden=true
+        endBtn.isHidden=true
+        resetBtn.isHidden=true
+        onTurnLabel.isHidden=true
+    }
+    
+    func startGame(){
+        for i in 0..<numOfRows {
+            for j in 0..<numOfColumns{
+                array[i][j]=""
+            }
+        }
+        startBtn.isHidden=true
+        buttons.isHidden=false
+        endBtn.isHidden=false
+        resetBtn.isHidden=false
+        onTurnLabel.isHidden=false
+        playerName.isHidden=false
+        playerOnTurn=markX
+        lastPlayer=markO
+        playerName.text=playerOnTurn
+    }
+    
+    func endGame(){
+        startBtn.isHidden=false
+        endBtn.isHidden=true
+        resetBtn.isHidden=true
+        buttons.isHidden=true
+        onTurnLabel.isHidden=true
+        playerName.isHidden=true
+        resetGame()
+    }
+    
     
     func resetGame(){
+        playerOnTurn=markX
+        lastPlayer=markO
+        playerName.text=playerOnTurn
         
-        for _ in 0..<3 {
-            array.append(Array(repeating:"",count:numOfColumns))
+        for i in 0..<numOfRows {
+            for j in 0..<numOfColumns{
+                array[i][j]=""
+            }
         }
         
         //dohvati horizontal stack viewe
@@ -209,11 +313,11 @@ class ViewController: UIViewController {
             for view in subview.subviews {
                 //dohvati button
                 if let btn = view as? UIButton {
-                    btn.setTitle("", for: .normal)
+                    btn.setTitle(nil, for: [])
+                    btn.isEnabled=true
                     //resetiraj button text
                 }
             }
-            
         }
     }
     
