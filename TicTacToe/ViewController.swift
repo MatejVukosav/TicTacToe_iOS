@@ -21,8 +21,8 @@ class ViewController: UIViewController {
     
     let numOfColumns=3
     let numOfRows=3
-    var array=Array<Array<String>>()
-    
+    //    var array=Array<Array<String>>()
+    var array = [[String]]()
     let markX:String="X"
     let markO:String="O"
     var lastPlayer:String = ""
@@ -61,17 +61,26 @@ class ViewController: UIViewController {
         let startFrameReveal = buttons.frame.offsetBy(dx: 0, dy: bounds.size.height)
         let finalFrameReveal=buttons.frame
         
-        
-        
-        UIView.animateKeyframes(withDuration: 1, delay: 0, options: .calculationModeCubic, animations: {
+        animationGoDown(startFrameReveal: startFrameReveal,finalFrameReveal: finalFrameReveal)
+    }
+    
+    func animationGoDown(startFrameReveal:CGRect,finalFrameReveal:CGRect){
+        UIView.animateKeyframes(withDuration: 0.5, delay: 0, options: .calculationModeCubic, animations: {
             //odi dole
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5) {
                 self.buttons.frame = startFrameReveal
             }
+        }, completion:  {finished in self.animationGoUp(finalFrameReveal: finalFrameReveal)})
+        
+    }
+    
+    func animationGoUp( finalFrameReveal:CGRect){
+        self.resetGame()
+        UIView.animateKeyframes(withDuration: 0.5, delay: 0, options: .calculationModeCubic, animations: {
+            
             //odi gore
-            UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.5) {
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5) {
                 self.buttons.frame = finalFrameReveal
-                self.resetGame()
             }
         }, completion: nil)
         
@@ -86,25 +95,25 @@ class ViewController: UIViewController {
         
         var text:String=playerOnTurn
         
-        //kad stavim nesto na 11 i resetiram igru, 11 mi i dalje ima vrijednost, tj prode unutar if-a why??
-        //        if let btnLabel=sender.titleLabel, let btnText=btnLabel.text{
-        //            //odigran je X, znaci na redu je O
-        //            text=btnText
-        //        }else{
-        //            //Promijeni vrijednosti na ploci
-        //            //prvi igra igrac X
-        //            text=playerOnTurn
-        //        }
+        //  kad stavim nesto na 11 i resetiram igru, 11 mi i dalje ima vrijednost, tj prode unutar if-a why??
+        if let btnLabel=sender.titleLabel, let btnText=btnLabel.text, btnText != " "{
+            //odigran je X, znaci na redu je O
+            text=btnText
+        }else{
+            //Promijeni vrijednosti na ploci
+            //prvi igra igrac X
+            text=playerOnTurn
+        }
         
         switch text{
         case markX:
             //na redu je X
-            sender.setTitle(markX, for: [])
+            sender.setTitle(markX, for: .normal)
             lastPlayer=markX
             playerOnTurn=markO
         case markO:
             //na redu je Y
-            sender.setTitle(markO, for: [])
+            sender.setTitle(markO, for: .normal)
             lastPlayer=markO
             playerOnTurn=markX
         default:
@@ -227,7 +236,7 @@ class ViewController: UIViewController {
             let element=array[numOfRows-1-i][i]
             
             if(element == "" || element != lastRight ){
-                return (false,"")
+                return (false, "")
             }
         }
         
@@ -295,12 +304,13 @@ class ViewController: UIViewController {
             for view in subview.subviews {
                 //dohvati button
                 if let btn = view as? UIButton {
-                    btn.setTitle(nil, for: [])
+                    btn.setTitle(" ", for: .normal)
                     btn.isEnabled=true
                     //resetiraj button vrijednosti
                 }
             }
         }
+        
     }
     
     func alert(title:String,msg: String){
